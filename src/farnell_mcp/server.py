@@ -45,7 +45,7 @@ mcp = FastMCP(
     - Order review and submission
 
     **Configuration:**
-    - Default store: Newark (www.newark.com)
+    - Default store: Farnell UK (uk.farnell.com)
     - Supports Farnell UK, Element14 APAC, and other regional stores
     - Environment: Production for product search, Sandbox for orders
 
@@ -224,7 +224,7 @@ def getting_started() -> str:
     **Configuration:**
     Set these environment variables in your .env file:
     - FARNELL_API_KEY: Your Partner API key
-    - FARNELL_STORE_ID: Regional store (default: www.newark.com)
+    - FARNELL_STORE_ID: Regional store (default: uk.farnell.com)
     - FARNELL_ENVIRONMENT: "production" or "sandbox"
     """
 

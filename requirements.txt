@@ -1,0 +1,6 @@
+# Runtime dependencies, mirrored from pyproject.toml [project.dependencies].
+# Fallback for Prefect Horizon dependency detection; keep in sync.
+fastmcp>=2.0.0
+requests>=2.31.0
+python-dotenv>=1.0.0
+pyrate-limiter>=3.0.0

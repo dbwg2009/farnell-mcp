@@ -52,7 +52,7 @@ uv run farnell-mcp
 | Variable | Description | Required | Default |
 |----------|-------------|----------|---------|
 | `FARNELL_API_KEY` | Partner API key from partner.element14.com | Yes | - |
-| `FARNELL_STORE_ID` | Regional store identifier | Yes | `www.newark.com` |
+| `FARNELL_STORE_ID` | Regional store identifier | Yes | `uk.farnell.com` |
 | `FARNELL_ENVIRONMENT` | `production` or `sandbox` | No | `production` |
 | `FARNELL_SANDBOX_USERNAME` | Sandbox username for Order API | Sandbox only | - |
 | `FARNELL_SANDBOX_PASSWORD` | Sandbox password for Order API | Sandbox only | - |
@@ -62,12 +62,12 @@ uv run farnell-mcp
 ### Regional Store Options
 
 **North America:**
-- `www.newark.com` - Newark (US/Canada) [DEFAULT]
+- `www.newark.com` - Newark (US/Canada)
 - `canada.newark.com` - Newark Canada
 - `mexico.newark.com` - Newark Mexico
 
 **Europe:**
-- `uk.farnell.com` - Farnell UK
+- `uk.farnell.com` - Farnell UK [DEFAULT]
 - `de.farnell.com` - Farnell Germany
 - `fr.farnell.com` - Farnell France
 - `es.farnell.com` - Farnell Spain
@@ -191,6 +191,25 @@ docker compose up --build
 1. Open the project in VS Code
 2. Install the "Dev Containers" extension
 3. Click "Reopen in Container" when prompted
+
+## Deploying to Prefect Horizon
+
+The server can be deployed to [Prefect Horizon](https://horizon.prefect.io) (FastMCP Cloud) and used as a Claude.ai custom connector.
+
+1. In Horizon, create a server from this GitHub repository.
+2. Set the **entrypoint** to `horizon_entry.py:mcp`. This wrapper puts `src/` on `sys.path` so the package's relative imports work without installing the project. Dependencies come from `pyproject.toml` (`requirements.txt` mirrors them as a fallback).
+3. Add these **environment variables** in the deployment settings (never commit them):
+
+   | Variable | Value |
+   |----------|-------|
+   | `FARNELL_API_KEY` | Your Partner API key |
+   | `FARNELL_STORE_ID` | e.g. `uk.farnell.com` |
+   | `FARNELL_ENVIRONMENT` | `production` |
+
+4. **Enable Horizon authentication** for the server so the endpoint isn't publicly callable with your API key. Claude.ai then completes the OAuth sign-in when you add the connector.
+5. In Claude.ai, go to **Settings → Connectors → Add custom connector** and paste the server's Horizon URL (ending in `/mcp`).
+
+Configuration is read when a tool is called, not at import time. A missing `FARNELL_API_KEY` therefore doesn't stop the deploy: it shows up as an error from `health_check` or the first tool call.
 
 ## Claude Desktop Integration
 

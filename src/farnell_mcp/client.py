@@ -79,7 +79,7 @@ def get_farnell_config() -> FarnellConfig:
     if not api_key:
         raise ValueError("FARNELL_API_KEY environment variable is required")
 
-    store_id = os.getenv("FARNELL_STORE_ID", "www.newark.com")
+    store_id = os.getenv("FARNELL_STORE_ID", "uk.farnell.com")
     environment = os.getenv("FARNELL_ENVIRONMENT", "production")
     timeout = int(os.getenv("FARNELL_API_TIMEOUT", "30"))
     debug = os.getenv("FARNELL_DEBUG", "false").lower() == "true"
